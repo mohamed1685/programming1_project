@@ -22,4 +22,25 @@ void loadUsers(User *users, int *numUsersPtr);
 int login(User *users, int numUsers);
 
 
+
+
+
+typedef struct {
+    int year;
+    int month;
+    int day;
+} Date;
+
+typedef struct {
+    int   account_number;              
+    char  name[100];               
+    char  address[100];            
+    float balance;                     
+    char  mobile[20];            
+    Date  date_opened;         
+    char  status[20]   ;        
+} Account;
+
+
+
 #endif
