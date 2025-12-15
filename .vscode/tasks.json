@@ -9,7 +9,7 @@
             "args": [
                 "-I.",                          // Includes Banksys.h (which is in the root)
                 "Main.c",                       // Main.c is in the root
-                "src/Banksys.c",                // Banksys.c is in the src folder
+                "src/users.c",                // Banksys.c is in the src folder
                 "src/transfer.c",               // transfer.c is in the src folder
                 "-o",
                 "bank_system.exe",              // Creates the executable in the root
