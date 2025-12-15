@@ -30,7 +30,7 @@ typedef struct {
 } Date;
 
 typedef struct {
-    int   account_number;              
+    long long  account_number;              
     char  name[100];               
     char  address[100];            
     double balance;                     
@@ -41,6 +41,6 @@ typedef struct {
 
 void loadUsers(User *users, int *numUsersPtr);
 int login(User *users, int numUsers);
-void loadAcc(Account *accounts,int *numAccptr);
+FILE *loadacc(Account *accounts,int *numAccptr);
 
 #endif

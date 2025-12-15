@@ -16,7 +16,7 @@ FILE * loadacc(Account *accounts,int *numAccptr){
 
     while(fgets(line,sizeof(line),file)!=NULL&&count<maxAccounts){
         
-        strcpy(accounts[count].account_number,strtok(line,delim));
+        accounts[count].account_number=atoll(strtok(line,delim));
         strcpy(accounts[count].name,strtok(NULL,delim));
         strcpy(accounts[count].address,strtok(NULL,delim));
         accounts[count].balance=atof(strtok(NULL,delim));
