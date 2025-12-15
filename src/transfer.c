@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include <string.h>
 
-#include </home/mohamed-amr/programming1_project/Banksys.h>
+#include "../Banksys.h"
 
 int check_account(int sender_number,Account accounts[],int  array_size,int * index);
 
@@ -36,7 +34,7 @@ void transfer(Account accounts[],int array_size){
         flag = 0;
     }
 }
-    while (flag =0);
+    while (flag==0);
 
     accounts[sender_index].balance -= transfer_amount;
     accounts[reciever_index].balance += transfer_amount;

@@ -1,4 +1,4 @@
-#include "Banksys.h"
+#include "../Banksys.h"
 #include <ctype.h> 
 
 void loadUsers(User *users, int *numUsersPtr){
@@ -65,3 +65,4 @@ printf("\nLogin failed. Invalid Username or Password.");
 return loginFail;
     
 }   
+
