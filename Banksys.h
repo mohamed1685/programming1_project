@@ -42,5 +42,6 @@ typedef struct {
 void loadUsers(User *users, int *numUsersPtr);
 int login(User *users, int numUsers);
 FILE *loadacc(Account *accounts,int *numAccptr);
+void addacc(Account *accounts,int *numAccptr);
 
 #endif
