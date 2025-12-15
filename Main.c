@@ -1,54 +1,35 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
+#include "Banksys.h"
+// Note: <stdio.h>, <stdlib.h>, <string.h> are included via "Banksys.h"
 
-void login();
-
-
-int main(){
-
-
-    return 0;
-}
-
-int login(){
-    char userIn[100];
-    char passIn[100];
-
-    printf("**********  Bank Log-in  **********");
-    printf("Enter your username: ");
+int main() {
     
-    if(scanf("%s",userIn)!=1)
-        return 0;
-
-    printf("\nEnter your password: ");
+    // Memory Allocation and Count Variables 
+    User userArray[maxUsers]; 
+    int userCount = 0; 
     
-    if(scanf("%s",passIn)!=1)
-        return 0;
-
-    FILE *file=fopen("users.txt","r");
-    if(file==NULL){
-        printf("Users File cant be loaded");
-        return 0;
+    // Call loadUsers()
+    loadUsers(userArray, &userCount);
+    
+    // Check for Loading Failure (loadUsers prints the error message)
+    if (userCount == 0) {
+        // KEEP: Essential message to tell the user why the program is exiting
+        printf("System cannot proceed without user data. Exiting.\n");
+        return 1;
     }
-
-    char line[100];
-    char *delim=" \t\n";
-
-    while(fgets(line,sizeof(line),file)!=NULL)
-    {
-        char *fileUser;
-        char *filePass;
-
-        fileuser=strtok(line,delim);
-        filePass=strtok(NULL,delim);
-
-        if((strcmp(userIn,fileUser)==0)&&(strcmp(passIn,filePass)==0)){
-            fclose(file);
-            printf("login successful");
-            return 1;
-        }
-
+    
+    // Loop Login Attempt
+    int loginStatus = loginFail;
+    
+    while (loginStatus != loginSuccess) {
+        
+        // login() handles its own prompts and failure messages
+        loginStatus = login(userArray, userCount);
+        
+        // No extra printf needed here; login() already printed "Login failed..."
     }
+    
+    // KEEP: Final success message
+    printf("Successfully authenticated. Proceeding to Bank System Menu...\n");
+    
+    return 0; 
 }
