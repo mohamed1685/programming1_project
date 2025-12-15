@@ -18,8 +18,7 @@ typedef struct {
     char password[Max_input_length];
 } User;
 
-void loadUsers(User *users, int *numUsersPtr);
-int login(User *users, int numUsers);
+
 
 
 
@@ -28,19 +27,20 @@ int login(User *users, int numUsers);
 typedef struct {
     int year;
     int month;
-    int day;
 } Date;
 
 typedef struct {
     int   account_number;              
     char  name[100];               
     char  address[100];            
-    float balance;                     
+    double balance;                     
     char  mobile[20];            
     Date  date_opened;         
     char  status[20]   ;        
 } Account;
 
-
+void loadUsers(User *users, int *numUsersPtr);
+int login(User *users, int numUsers);
+void loadAcc(Account *accounts,int *numAccptr);
 
 #endif
