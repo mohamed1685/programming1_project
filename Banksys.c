@@ -30,7 +30,7 @@ void loadUsers(User *users, int *numUsersPtr){
     }
     fclose(file);
     *numUsersPtr=count;
-    printf("successfully loaded %d users",count);
+    printf("successfully loaded %d users\n\n",count);
 
 
 
