@@ -36,7 +36,8 @@ typedef struct {
     double balance;                     
     char  mobile[20];            
     Date  date_opened;         
-    char  status[20]   ;        
+    int status;  
+    float remianing_daily_limit;     
 } Account;
 
 void loadUsers(User *users, int *numUsersPtr);

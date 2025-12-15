@@ -17,7 +17,7 @@ void report(){
     FILE * file_ptr = fopen(file_name,"r");
     
     if(file_ptr == NULL){
-        printf("failed to open file");
+        printf("failed to open file\n");
         exit(1);
     }
 
@@ -47,13 +47,13 @@ void add_transfer_transaction(int reciver_number,int sender_number,float transfe
     
     FILE * file_ptr = fopen(reciever_file_name,"a");
     if(file_ptr == NULL){
-        printf("failed to open file");
+        printf("failed to open file\n");
                 return;
     }
     char new_line1[50];
 
     sprintf(new_line1,"\ntransfer_in,%f",transfer_amount);
-    fprintf(file_ptr,new_line1);
+    fprintf(file_ptr,"%s",new_line1);
     fclose(file_ptr);
 
     char sender_file_name[20];
@@ -62,14 +62,14 @@ void add_transfer_transaction(int reciver_number,int sender_number,float transfe
     file_ptr = fopen(sender_file_name,"a");
 
     if(file_ptr == NULL){
-        printf("failed to open file");
+        printf("failed to open file\n");
                 return;
     }
 
     char new_line2[50];
 
     sprintf(new_line2,"\ntransfer_out,%f",transfer_amount);
-    fprintf(file_ptr,new_line2);
+    fprintf(file_ptr,"%s",new_line2);
     fclose(file_ptr); 
 
 }
@@ -82,13 +82,13 @@ void add_withdraw_transaction(int account_number,float withdraw_amount){
     FILE * file_ptr = fopen(file_name,"a");
     
     if(file_ptr == NULL){
-        printf("failed to open file");
+        printf("failed to open file\n");
         return;
     }
     char new_line[50];
 
     sprintf(new_line,"\nwithdraw,%f",withdraw_amount);
-    fprintf(file_ptr,new_line);
+    fprintf(file_ptr,"%s",new_line);
     fclose(file_ptr);
 
 }
@@ -125,14 +125,15 @@ void transfer(Account accounts[],int array_size){
     }
     while (check_account(reciever_number,accounts,array_size,&reciever_index) !=1);
 
-    int flag = 1;
+    int flag;
     do {
+    flag =1;
     printf("Enter transfer amount: ");
     scanf("%f",&transfer_amount);    
     
 
     if(transfer_amount >accounts[sender_index].balance){
-        printf("transfer amount larger then sender balance");
+        printf("transfer amount larger then sender balance\n");
         flag = 0;
     }
 }
@@ -150,16 +151,17 @@ int check_account(int sender_number,Account accounts[],int  array_size,int * ind
     for(i =0;i<array_size;i++){
         if (accounts[i].account_number == sender_number){
             if(accounts[i].status == 1){
-                return 1;
                 *index = i;
+                return 1;
+
             }
             else{
-                printf("account is inactive");
+                printf("account is inactive\n");
                 return 0;
             }
         }
     }
-    printf("couldnt find account");
+    printf("couldnt find account\n");
     return 0 ;
 
 }
@@ -177,13 +179,13 @@ void withdraw(Account accounts[],int size){
     int flag =1;
     do {
         printf("Enter withdrawl ammount: ");
-        scanf("%f",withdrawl_amount);
+        scanf("%f",&withdrawl_amount);
         if(withdrawl_amount > accounts[account_index].remianing_daily_limit){
-            printf("this transaction exceededs daily limit");
+            printf("this transaction exceededs daily limit\n");
             flag = 0;
         }
         if(withdrawl_amount >10000.0){
-            printf(" transaction can not exceed 10,000$");
+            printf(" transaction can not exceed 10,000$\n");
             flag = 0;
         }
     }
@@ -191,7 +193,7 @@ void withdraw(Account accounts[],int size){
 
     accounts[account_index].balance -= withdrawl_amount;
     accounts[account_index].remianing_daily_limit -= withdrawl_amount;
-    printf("withdrawl successful");
+    printf("withdrawl successful\n");
     add_withdraw_transaction(account_number,withdrawl_amount);
 
 
