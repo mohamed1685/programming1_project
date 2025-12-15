@@ -6,17 +6,20 @@ int main() {
     
     // --- 1. DATA DECLARATION ---
     
+    // User Data (File closed by loadUsers)
     User userArray[maxUsers]; 
     int userCount = 0; 
     
+    // Account Data (File must remain open, handle stored here)
     Account accountArray[maxAccounts]; 
     int accountCount = 0;
     
-    // File Handle (We will NOT close this in this test version)
+    // File Handle (To store the pointer for the open accounts file)
     FILE *accountFileHandle = NULL;
     
     // --- 2. LOAD DATA ---
     
+    // loadUsers is VOID and closes its own file.
     loadUsers(userArray, &userCount); 
     
     if (userCount == 0) {
@@ -24,11 +27,13 @@ int main() {
         return 1;
     }
 
+    // loadacc returns the OPEN FILE HANDLE, which we must store.
     accountFileHandle = loadacc(accountArray, &accountCount); 
     
     if (accountCount == 0 || accountFileHandle == NULL) {
         printf("FATAL: System cannot proceed without account data. Exiting.\n");
-        // We still check and close the file if an error occurred during loading
+        
+        // Cleanup the accounts file handle if it was opened
         if (accountFileHandle != NULL) {
             fclose(accountFileHandle); 
         }
@@ -38,40 +43,36 @@ int main() {
     // 🛑 VERIFICATION: Print loaded accounts list
     printf("\n--- VERIFICATION: Loaded Accounts List (%d total) ---\n", accountCount);
     for (int i = 0; i < accountCount; i++) {
+        // FIX: Using %ld because account_number is now a long integer
         printf("Index %d: Account Number: %lld, Name: %s\n", 
                i, 
-               accountArray[i].account_number, 
+               accountArray[i].account_number, // This field is now long
                accountArray[i].name);
     }
     printf("--------------------------------------------------\n");
     
     // --- 3. LOGIN LOOP ---
     
-    int loggedInIndex = -1; 
+    int loggedInIndex = -1; // -1 means failure/not logged in
     
     printf("\nWelcome to the Bank System. Please log in.\n");
     
+    // Loop until successful login
     while (loggedInIndex == -1) { 
+        // Assuming login() returns the index of the logged-in user (0 to userCount-1)
         loggedInIndex = login(userArray, userCount);
     }
     
     printf("Successfully authenticated. User index: %d\n", loggedInIndex);
     
-    // --- 4. ADD ACCOUNT (TEST) ---
-    // This is the core test: it updates the array and accountCount in memory.
-    printf("\n*** TESTING addAccount FUNCTION ***\n");
-    printf("Account count before: %d\n", accountCount);
+    // --- 4. CLEANUP AND EXIT ---
     
-    addacc(accountArray, &accountCount);
+    // 🛑 CRITICAL: The required single fclose() for the accounts file.
+    if (accountFileHandle != NULL) {
+        fclose(accountFileHandle); 
+    }
     
-    printf("*** TESTING COMPLETE. Current account count: %d ***\n", accountCount);
-    
-    // --- 5. CLEANUP AND EXIT (MODIFIED) ---
-    
-    // NOTE: We are intentionally SKIPPING the saveAccounts call and the fclose()
-    // to allow you to test the addAccount function without needing the save logic yet.
-    
-    printf("\nSession ended. System shutdown complete (File handle remains open in memory).\n");
+    printf("Session ended. System shutdown complete.\n");
     
     return 0; 
 }

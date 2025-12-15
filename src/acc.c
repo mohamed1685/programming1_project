@@ -32,37 +32,3 @@ FILE * loadacc(Account *accounts,int *numAccptr){
     return file;
 
 }
-
-void addacc(Account *accounts,int *numAccptr)
-{
-    if(*numAccptr>=maxAccounts){
-        printf("\n cant add account,Max limit reached");
-        return;
-    }
-
-
-    printf("enter Account number: ");
-    scanf("%lld",&accounts[*numAccptr].account_number);
-    while (getc(stdin) != '\n');
-    printf("\nenter Account name: ");
-    gets(accounts[*numAccptr].name);
-    printf("\nenter Account address: ");
-    gets(accounts[*numAccptr].address);
-    printf("\nenter Account balance: ");
-    scanf("%lf",&accounts[*numAccptr].balance);
-    while (getc(stdin) != '\n');
-    printf("\nenter Account mobile number: ");
-    gets(accounts[*numAccptr].mobile);
-    printf("\nenter Account creation month(1-12): ");
-    scanf("%d",&accounts[*numAccptr].date_opened.month);
-    printf("\nenter Account creation year: ");
-    scanf("%d",&accounts[*numAccptr].date_opened.year); 
-
-    strcpy(accounts[*numAccptr].status,"ACTIVE");
-
-    (*numAccptr)++;
-
-    printf("Success, new account added with index %d",((*numAccptr)-1));
-    printf("account name:%s   account number: %lld",accounts[(*numAccptr)-1].name,accounts[(*numAccptr)-1].account_number );
-
-}
