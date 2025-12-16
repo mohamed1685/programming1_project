@@ -31,7 +31,8 @@ typedef struct {
 
 typedef struct {
     long long  account_number;              
-    char  name[100];               
+    char  firstname[100];  
+    char  lastname[100];             
     char  address[100];            
     double balance;                     
     char  mobile[20];            

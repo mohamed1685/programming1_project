@@ -1,4 +1,4 @@
-#include "../Banksys.h"
+#include "headers/Banksys.h"
 #include <ctype.h> 
 
 void loadUsers(User *users, int *numUsersPtr){

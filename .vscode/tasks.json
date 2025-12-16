@@ -7,23 +7,26 @@
             "type": "shell", 
             "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe", // Your confirmed compiler path
             "args": [
-                "-I.",                          // Includes Banksys.h (which is in the root)
-                "Main.c",                // Main.c is in the root
-                "src/acc.c",            
-                "src/users.c",                // Banksys.c is in the src folder
-                "src/transfer.c",               // transfer.c is in the src folder
+                "-I.",                                 // Search 1: Main folder (root)
+                "-Iheaders",                           // Search 2: The dedicated 'headers' folder
+                
+                // The compiler finds these source files because of their explicit path:
+                "Main.c", 
+                "src/acc.c",
+                "src/users.c",
+                "src/transactions.c",
+                
                 "-o",
-                "bank_system.exe",              // Creates the executable in the root
-                "-std=c11",         
+                "bank_system.exe",
+                "-std=c11",
                 "-Wall"
             ],
             "options": {
-                // IMPORTANT: Command must run from the root folder
                 "cwd": "${workspaceFolder}" 
             },
             "group": {
                 "kind": "build",
-                "isDefault": true // Makes this the default Ctrl+Shift+B task
+                "isDefault": true
             },
             "presentation": {
                 "reveal": "always",
@@ -39,7 +42,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "test", 
-            "dependsOn": ["Build Bank System"] // Only runs after a successful build
+            "dependsOn": ["Build Bank System"]
         }
     ]
 }
