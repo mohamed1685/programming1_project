@@ -1,12 +1,13 @@
 #include "../headers/Banksys.h"
 
-FILE * loadacc(Account *accounts,int *numAccptr){
+void loadacc(Account *accounts,int *numAccptr, FILE **filePtr){
     *numAccptr=0;
     char statstr[20];
     FILE *file=fopen("accounts.txt","r");
+    *filePtr = file;
     if(file==NULL){
         printf("Accounts Couldnt be loaded");
-        return NULL;
+        return;
     }
     printf("test");
     char line[line_length];
@@ -52,10 +53,7 @@ FILE * loadacc(Account *accounts,int *numAccptr){
         }
         i++;
     }
-    return file;
-
 }
-
 void addacc(Account *accounts,int *numAccptr)
 {
     if(*numAccptr>=maxAccounts){

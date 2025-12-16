@@ -43,7 +43,7 @@ typedef struct {
 
 void loadUsers(User *users, int *numUsersPtr);
 int login(User *users, int numUsers);
-FILE * loadacc(Account *accounts,int *numAccptr);
+void loadacc(Account *accounts,int *numAccptr, FILE **filePtr);
 void addacc(Account *accounts,int *numAccptr);
 void printaccdetails(Account *accounts,int *numAccptr);
 
