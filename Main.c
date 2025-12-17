@@ -4,10 +4,12 @@
 
 int main() {
     Account accounts[maxAccounts];
-    int numAccptr;
+    User users[maxUsers];
+    int numAccptr,numUsersptr;
     FILE *fileptr = NULL;
+    loadUsers(users,&numUsersptr);
+    int loginstatus=login(users,numUsersptr);
     loadacc(accounts,&numAccptr,&fileptr);
-    addacc(accounts,&numAccptr);
-    printaccdetails(accounts,&numAccptr);
-    return 0;
+    menu(accounts,&numAccptr,loginstatus);
+        return 0;
 }

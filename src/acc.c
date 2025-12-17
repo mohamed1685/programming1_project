@@ -90,27 +90,27 @@ void addacc(Account *accounts,int *numAccptr)
 
 }
 
-void printaccdetails(Account *accounts,int *numAccptr){
-    int i=0;
-    int count= *numAccptr;
-    printf("Successfully Loaded %d accounts", count);
-    while(i<count){
-        printf("account #%d\n",i+1);
-        printf("account number: %lld\n",accounts[i].account_number);
-        printf("account first name: %s\n",accounts[i].firstname);
-        printf("account last name: %s\n",accounts[i].lastname);
-        printf("account address: %s\n",accounts[i].address);
-        printf("account balance: %.2lf\n",accounts[i].balance);
-        printf("account mobile number: %s\n",accounts[i].mobile);
-        printf("account month opened: %d\n",accounts[i].date_opened.month);
-        printf("account year opened: %d\n",accounts[i].date_opened.year);
-        if(accounts[i].status){
-            printf("account status: ACTIVE\n\n\n\n\n");
-        }
-        else if(accounts[i].status==0){
-            printf("account status: INACTIVE\n\n\n\n\n");
-        }
-        i++;
+    void printaccdetails(Account *accounts,int *numAccptr){
+        int i=0;
+        int count= *numAccptr;
+        printf("Successfully Loaded %d accounts", count);
+        while(i<count){
+            printf("account #%d\n",i+1);
+            printf("account number: %lld\n",accounts[i].account_number);
+            printf("account first name: %s\n",accounts[i].firstname);
+            printf("account last name: %s\n",accounts[i].lastname);
+            printf("account address: %s\n",accounts[i].address);
+            printf("account balance: %.2lf\n",accounts[i].balance);
+            printf("account mobile number: %s\n",accounts[i].mobile);
+            printf("account month opened: %d\n",accounts[i].date_opened.month);
+            printf("account year opened: %d\n",accounts[i].date_opened.year);
+            if(accounts[i].status){
+                printf("account status: ACTIVE\n\n\n\n\n");
+            }
+            else if(accounts[i].status==0){
+                printf("account status: INACTIVE\n\n\n\n\n");
+            }
+            i++;
 
-}
+    }
 }

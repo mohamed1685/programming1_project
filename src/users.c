@@ -1,4 +1,5 @@
 #include "../headers/Banksys.h"
+#include "../headers/transactions.h"
 #include <ctype.h> 
 
 void loadUsers(User *users, int *numUsersPtr){
@@ -64,5 +65,104 @@ int login(User *users, int numUsers){
 printf("\nLogin failed. Invalid Username or Password.");
 return loginFail;
     
-}   
+}
+
+void menu(Account *accounts,int *numAccptr,int loginstatus){
+    int userin=0;
+    
+    if(loginstatus){
+        while(userin!=12){
+            printf("*****************************************\n");
+            printf("* Welcome to The Bank System       *\n");
+            printf("*****************************************\n");
+            printf("* Enter your choice (1-12):            *\n");
+            printf("* *\n");
+            printf("* 1. Add Account                       *\n");
+            printf("* 2. Delete Account                    *\n");
+            printf("* 3. Modify Account                    *\n");
+            printf("* 4. Search                            *\n");
+            printf("* 5. Advanced Search                   *\n");
+            printf("* 6. Change Status                     *\n");
+            printf("* 7. Withdraw                          *\n");
+            printf("* 8. Deposit                           *\n");
+            printf("* 9. Transfer                          *\n");
+            printf("* 10. Report                           *\n");
+            printf("* 11. Print                            *\n");
+            printf("* 12. Quit                             *\n");
+            printf("*****************************************\n");
+            printf("Choice: ");
+            
+            // Check if scanf failed to read a number
+            scanf("%d", &userin);
+            
+            // This clears the leftover '\n' so it doesn't mess up your next function
+            getchar();
+            switch(userin) {
+                case 1:
+            {
+                addacc(accounts,numAccptr);
+                break;
+            }
+                case 2:
+            {
+                
+                break;
+            }
+                case 3:
+            {
+                
+                break;
+            }
+                case 4:
+            {
+                
+                break;
+            }
+                case 5:
+            {
+                
+                break;
+            }
+
+                case 6:
+            {
+                
+                break;
+            }
+
+                case 7:
+            {
+                
+                break;
+            }
+                case 8:
+            {
+                
+                break;
+            }
+                case 9:
+            {
+                break;
+            }
+                case 10:
+            {
+                
+                break;
+            }
+                case 11:
+            {
+                printaccdetails(accounts,numAccptr);
+                break;
+            };
+                case 12:
+            {
+                printf("Succesfully exited system,Goodbye");
+                break;
+            }
+            
+
+            }
+        }
+    }
+}
 
