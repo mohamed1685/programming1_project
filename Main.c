@@ -1,4 +1,4 @@
-#include "../headers/Banksys.h"
+#include "headers/Banksys.h"
 #include <stdio.h> 
 
 
@@ -11,5 +11,5 @@ int main() {
     int loginstatus=login(users,numUsersptr);
     loadacc(accounts,&numAccptr,&fileptr);
     menu(accounts,&numAccptr,loginstatus);
-        return 0;
+    return 0;
 }

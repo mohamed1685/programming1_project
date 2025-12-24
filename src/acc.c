@@ -31,6 +31,7 @@ void loadacc(Account *accounts,int *numAccptr, FILE **filePtr){
         else if(strcmp(statstr,"inactive")==0){
             accounts[count].status= 0;
         }
+        accounts[count].remianing_daily_limit= 50000.00;
         count++;
     }
     *numAccptr=count;
@@ -82,7 +83,7 @@ void addacc(Account *accounts,int *numAccptr)
     scanf("%d",&accounts[*numAccptr].date_opened.year); 
 
     accounts[*numAccptr].status=1;
-
+    accounts[*numAccptr].remianing_daily_limit= 50000.00;
     (*numAccptr)++;
 
     printf("\nSuccess, new account added with index %d\n\n",((*numAccptr)-1));

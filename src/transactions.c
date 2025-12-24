@@ -178,10 +178,10 @@ void withdraw(Account accounts[],int size){
 
     int flag =1;
     do {
-        printf("Enter withdrawl ammount: ");
+        printf("Enter withdrawl amount: ");
         scanf("%f",&withdrawl_amount);
         if(withdrawl_amount > accounts[account_index].remianing_daily_limit){
-            printf("this transaction exceededs daily limit\n");
+            printf("this transaction exceedss daily limit\n");
             flag = 0;
         }
         if(withdrawl_amount >10000.0){
@@ -209,7 +209,7 @@ void deposit(Account accounts[],int size){
     }
     while (check_account(account_number,accounts,size,&account_index) !=1);
 
-        printf("Enter deposit ammount");
+        printf("Enter deposit amount");
         scanf("%f",&deposit_amount);
         
         accounts[account_index].balance += deposit_amount;

@@ -131,22 +131,25 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
             }
 
                 case 7:
+            
             {
-                
+                withdraw(accounts,*numAccptr);
                 break;
             }
                 case 8:
             {
-                
+                deposit(accounts,*numAccptr);
                 break;
             }
                 case 9:
-            {
+            {   transfer(accounts,*numAccptr);
                 break;
             }
                 case 10:
             {
                 
+
+
                 break;
             }
                 case 11:

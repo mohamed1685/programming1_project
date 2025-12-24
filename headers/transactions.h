@@ -19,7 +19,7 @@ void add_deposit_transaction(int account_number,
 
 void transfer(Account accounts[],int array_size); //prompts the user to make a transaction
 
-void withdraw(Account accounts[],int size); //prompts thee user to make a withdraw
+void withdraw(Account accounts[],int size); //prompts the user to make a withdraw
 
 void deposit(Account accounts[],int size); //prompts user to  make a deposit 
 
@@ -28,5 +28,8 @@ int check_account(int account_number,
                   Account accounts[],
                   int array_size,
                   int *index);
+
+void report();
+
 
 #endif 
