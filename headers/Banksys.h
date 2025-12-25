@@ -47,5 +47,9 @@ void loadacc(Account *accounts,int *numAccptr, FILE **filePtr);
 void addacc(Account *accounts,int *numAccptr);
 void printaccdetails(Account *accounts,int *numAccptr);
 void menu(Account *accounts,int *numAccptr,int loginstatus);
+void deleteacc(Account *accounts, int *numAccptr) ;
+void modifyacc(Account *accounts,int *numAccptr);
+void changeStatus(Account *accounts,int *numAccptr);
+void saveAccounts(Account *accounts, int *numAccptr);
 
 #endif

@@ -7,12 +7,12 @@
 void report(){
 
     int i;
-    int account_number;
+    long long account_number;
     printf("Enter a bank account number: ");
-    scanf("%d",&account_number);
+    scanf("%lld",&account_number);
 
     char file_name[20];
-    sprintf(file_name,"./transactions/%d.txt",account_number);
+    sprintf(file_name,"./transactions/%lld.txt",account_number);
 
     FILE * file_ptr = fopen(file_name,"r");
     
@@ -40,10 +40,10 @@ void report(){
 }
 
 
-void add_transfer_transaction(int reciver_number,int sender_number,float transfer_amount){
+void add_transfer_transaction(long long reciver_number,long long sender_number,float transfer_amount){
     
     char reciever_file_name[20] ;
-    sprintf(reciever_file_name,"./transactions/%d.txt",reciver_number);
+    sprintf(reciever_file_name,"./transactions/%lld.txt",reciver_number);
     
     FILE * file_ptr = fopen(reciever_file_name,"a");
     if(file_ptr == NULL){
@@ -57,7 +57,7 @@ void add_transfer_transaction(int reciver_number,int sender_number,float transfe
     fclose(file_ptr);
 
     char sender_file_name[20];
-    sprintf(sender_file_name,"./transactions/%d.txt",sender_number);
+    sprintf(sender_file_name,"./transactions/%lld.txt",sender_number);
 
     file_ptr = fopen(sender_file_name,"a");
 
@@ -75,9 +75,9 @@ void add_transfer_transaction(int reciver_number,int sender_number,float transfe
 }
 
 
-void add_withdraw_transaction(int account_number,float withdraw_amount){
+void add_withdraw_transaction(long long account_number,float withdraw_amount){
     char file_name[20];
-    sprintf(file_name,"./transactions/%d.txt",account_number);
+    sprintf(file_name,"./transactions/%lld.txt",account_number);
 
     FILE * file_ptr = fopen(file_name,"a");
     
@@ -93,9 +93,9 @@ void add_withdraw_transaction(int account_number,float withdraw_amount){
 
 }
 
-void add_deposit_transaction(int account_number, float deposit_amount) {
+void add_deposit_transaction(long long account_number, float deposit_amount) {
     char file_name[20];
-    snprintf(file_name, sizeof(file_name), "./transactions/%d.txt", account_number);
+    snprintf(file_name, sizeof(file_name), "./transactions/%lld.txt", account_number);
 
     FILE *file_ptr = fopen(file_name, "a");
     if (!file_ptr) {
@@ -108,20 +108,20 @@ void add_deposit_transaction(int account_number, float deposit_amount) {
 }
 
 void transfer(Account accounts[],int array_size){
-    int  sender_number,reciever_number;
+    long long  sender_number,reciever_number;
     int sender_index,reciever_index;
     float transfer_amount;
 
 
     do{
     printf("Enter account number of sender: ");
-    scanf("%i",&sender_number);
+    scanf("%lld",&sender_number);
     }
     while (check_account(sender_number,accounts,array_size,&sender_index) !=1);
 
     do{
     printf("Enter account number of reciever: ");
-    scanf("%i",&reciever_number);
+    scanf("%lld",&reciever_number);
     }
     while (check_account(reciever_number,accounts,array_size,&reciever_index) !=1);
 
@@ -146,7 +146,7 @@ void transfer(Account accounts[],int array_size){
 
 }
 
-int check_account(int sender_number,Account accounts[],int  array_size,int * index){
+int check_account(long long sender_number,Account accounts[],int  array_size,int * index){
     int i ;
     for(i =0;i<array_size;i++){
         if (accounts[i].account_number == sender_number){
@@ -167,11 +167,12 @@ int check_account(int sender_number,Account accounts[],int  array_size,int * ind
 }
 
 void withdraw(Account accounts[],int size){
-    int account_number,account_index;
+    long long account_number;
+    int account_index;
     float withdrawl_amount;
     do{
     printf("Enter account number: ");
-    scanf("%i",&account_number);
+    scanf("%lld",&account_number);
     }
     while (check_account(account_number,accounts,size,&account_index) !=1);
 
@@ -201,11 +202,12 @@ void withdraw(Account accounts[],int size){
 
 
 void deposit(Account accounts[],int size){
-    int account_number,account_index;
+    long long account_number;
+    int account_index;
     float deposit_amount;
     do{
     printf("Enter account number: ");
-    scanf("%i",&account_number);
+    scanf("%lld",&account_number);
     }
     while (check_account(account_number,accounts,size,&account_index) !=1);
 

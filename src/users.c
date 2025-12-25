@@ -71,11 +71,11 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
     int userin=0;
     
     if(loginstatus){
-        while(userin!=12){
+        while(userin!=13){
             printf("*****************************************\n");
             printf("* Welcome to The Bank System       *\n");
             printf("*****************************************\n");
-            printf("* Enter your choice (1-12):            *\n");
+            printf("* Enter your choice (1-13):            *\n");
             printf("* *\n");
             printf("* 1. Add Account                       *\n");
             printf("* 2. Delete Account                    *\n");
@@ -88,14 +88,13 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
             printf("* 9. Transfer                          *\n");
             printf("* 10. Report                           *\n");
             printf("* 11. Print                            *\n");
-            printf("* 12. Quit                             *\n");
+            printf("* 12. Save                             *\n");
+            printf("* 13. Quit                             *\n");
             printf("*****************************************\n");
             printf("Choice: ");
             
-            // Check if scanf failed to read a number
             scanf("%d", &userin);
             
-            // This clears the leftover '\n' so it doesn't mess up your next function
             getchar();
             switch(userin) {
                 case 1:
@@ -105,12 +104,12 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
             }
                 case 2:
             {
-                
+                deleteacc(accounts, numAccptr);
                 break;
             }
                 case 3:
             {
-                
+                modifyacc(accounts,numAccptr);
                 break;
             }
                 case 4:
@@ -126,12 +125,11 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
 
                 case 6:
             {
-                
+                changeStatus(accounts,numAccptr);
                 break;
             }
 
                 case 7:
-            
             {
                 withdraw(accounts,*numAccptr);
                 break;
@@ -147,9 +145,7 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
             }
                 case 10:
             {
-                
-
-
+                report();
                 break;
             }
                 case 11:
@@ -158,6 +154,11 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
                 break;
             };
                 case 12:
+            {   
+                saveAccounts(accounts, numAccptr);
+                break;
+            }
+                case 13:
             {
                 printf("Succesfully exited system,Goodbye");
                 break;

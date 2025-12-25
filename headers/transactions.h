@@ -3,28 +3,28 @@
 
 #include "Banksys.h"
 
-//Show last 5 transactions for an account 
+
 void report(void);
 
 // Transaction record helpers 
-void add_transfer_transaction(int receiver_number,
-                              int sender_number,
+void add_transfer_transaction(long long receiver_number,
+                              long long sender_number,
                               float transfer_amount);
 
-void add_withdraw_transaction(int account_number,
+void add_withdraw_transaction(long long account_number,
                               float withdraw_amount);
 
-void add_deposit_transaction(int account_number,
+void add_deposit_transaction(long long account_number,
                              float deposit_amount);
 
-void transfer(Account accounts[],int array_size); //prompts the user to make a transaction
+void transfer(Account accounts[],int array_size);
 
-void withdraw(Account accounts[],int size); //prompts the user to make a withdraw
+void withdraw(Account accounts[],int size);
 
-void deposit(Account accounts[],int size); //prompts user to  make a deposit 
+void deposit(Account accounts[],int size); 
 
 
-int check_account(int account_number,
+int check_account(long long account_number,
                   Account accounts[],
                   int array_size,
                   int *index);
@@ -32,4 +32,4 @@ int check_account(int account_number,
 void report();
 
 
-#endif 
+#endif
