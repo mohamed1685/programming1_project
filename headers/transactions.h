@@ -6,7 +6,7 @@
 
 void report(void);
 
-// Transaction record helpers 
+
 void add_transfer_transaction(long long receiver_number,
                               long long sender_number,
                               float transfer_amount);

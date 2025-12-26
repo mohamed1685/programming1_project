@@ -1,0 +1,4 @@
+
+withdraw,70.000000
+transfer_out,70.000000
+transfer_out,50.000000

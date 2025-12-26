@@ -18,10 +18,10 @@ for (i = 0; i<size;i++){
     }
 }
 if (flag ==0){
-    printf("no account created on that date \n");
+    printf(RED"no account created on that date \n"RESET);
 }
 else{
-    printf("successfully deleted %i accounts \n ",counter);
+    printf(GREEN"successfully deleted %i accounts \n "RESET,counter);
 }
 }
 
@@ -31,9 +31,9 @@ void delete_by_status(Account accounts[],int size){
     Date current_date;
     int i,flag=0;
 
-    printf("enter current year: ");
+    printf(YELLOW"enter current year: ");
     scanf("%i",&current_date.year);
-    printf("enter current month: ");
+    printf("enter current month: "RESET);
     scanf("%i",&current_date.month);
 
     
@@ -45,7 +45,7 @@ void delete_by_status(Account accounts[],int size){
         }
 }
 if (flag ==0){
-    printf("no inactive accounts for more than 90 days with balance = 0  \n");
+    printf(RED"no inactive accounts for more than 90 days with balance = 0  \n"RESET);
 }
 
 }
@@ -56,7 +56,7 @@ void delete_account(Account accounts[], int size,long long target) {
     int foundInd = -1;
 
     if (size == 0) {
-        printf("\nNo accounts available to delete.\n");
+        printf(RED"\nNo accounts available to delete.\n"RESET);
         return;
     }
 
@@ -75,7 +75,7 @@ void delete_account(Account accounts[], int size,long long target) {
     }
     size--;
 
-    printf("\nAccount %lld successfully deleted.\n", target);
+    printf(GREEN"\nAccount %lld successfully deleted.\n"RESET, target);
 }
 
 void delete_multiple(Account accounts[], int size){
@@ -83,9 +83,9 @@ void delete_multiple(Account accounts[], int size){
     int flag = 1;
     do{
         if (flag == 0){
-            printf("invalid option \n");
+            printf(RED"invalid option \n"RESET);
         }
-        printf("enter 1 for delete by date or 2 for delete by status");
+        printf(YELLOW"enter 1 for delete by date or 2 for delete by status"RESET);
         scanf("%i",&option);
         if (option !=1 && option != 2){
             flag = 0;

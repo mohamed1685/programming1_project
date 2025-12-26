@@ -1,4 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "../headers/Banksys.h"
+
+int digitVal(char s[]) {
+    int i = 0;
+    while (s[i] != '\0') {
+        if (s[i] < '0' || s[i] > '9') {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
+int mailVal(char s[]) {
+    int i = 0;
+    int at_index = -1;
+    int dot_index = -1;
+
+    while (s[i] != '\0') {
+        if (s[i] == '@') {
+            at_index = i; 
+        }
+        else if (s[i] == '.') {
+            dot_index = i; 
+        }
+        i++;
+    }
+
+    if (at_index != -1 && dot_index != -1 && at_index < dot_index) {
+        return 1;
+    }
+    return 0;
+}
 
 void loadacc(Account *accounts,int *numAccptr, FILE **filePtr){
     *numAccptr=0;
@@ -6,15 +41,15 @@ void loadacc(Account *accounts,int *numAccptr, FILE **filePtr){
     FILE *file=fopen("accounts.txt","r");
     *filePtr = file;
     if(file==NULL){
-        printf("Accounts Couldnt be loaded");
+        printf(RED "Accounts Couldnt be loaded" RESET);
         return;
     }
-    printf("test");
+    
     char line[line_length];
     char *delim= " ,-\n\r";
-    int count=0,i=0;
+    int count=0;
 
-    while(fgets(line,sizeof(line),file)!=NULL&&count<maxAccounts){
+    while(fgets(line,sizeof(line),file)!=NULL && count<maxAccounts){
         
         accounts[count].account_number=atoll(strtok(line,delim));
         strcpy(accounts[count].firstname,strtok(NULL,delim));
@@ -25,6 +60,7 @@ void loadacc(Account *accounts,int *numAccptr, FILE **filePtr){
         accounts[count].date_opened.month=atoi(strtok(NULL,delim));
         accounts[count].date_opened.year=atoi(strtok(NULL,delim));
         strcpy(statstr,strtok(NULL,delim));
+        
         if(strcmp(statstr,"active")==0){
             accounts[count].status=1;
         }
@@ -35,60 +71,114 @@ void loadacc(Account *accounts,int *numAccptr, FILE **filePtr){
         count++;
     }
     *numAccptr=count;
-    printf("Successfully Loaded %d accounts", count);
-    while(i<count){
-        printf("account #%d\n",i+1);
-        printf("account number: %lld\n",accounts[i].account_number);
-        printf("account first name: %s\n",accounts[i].firstname);
-        printf("account last name: %s\n",accounts[i].lastname);
-        printf("account address: %s\n",accounts[i].address);
-        printf("account balance: %.2lf\n",accounts[i].balance);
-        printf("account mobile number: %s\n",accounts[i].mobile);
-        printf("account month opened: %d\n",accounts[i].date_opened.month);
-        printf("account year opened: %d\n",accounts[i].date_opened.year);
-        if(accounts[i].status){
-            printf("account status: ACTIVE\n\n\n\n\n");
-        }
-        else if(accounts[i].status==0){
-            printf("account status: INACTIVE\n\n\n\n\n");
-        }
-        i++;
-    }
 }
-void addacc(Account *accounts,int *numAccptr)
-{
-    if(*numAccptr>=maxAccounts){
-        printf("\n cant add account,Max limit reached");
+
+void addacc(Account *accounts, int *numAccptr) {
+    char input[100];
+    int valid = 0;
+
+    if (*numAccptr >= maxAccounts) {
+        printf(RED "\nError: Cannot add account, Max limit reached\n" RESET);
         return;
     }
 
+    do {
+        printf(YELLOW "Enter Account number (10 digits): " RESET);
+        scanf("%s", input);
+        if (strlen(input) == 10 && digitVal(input)) {
+            accounts[*numAccptr].account_number = atoll(input);
+            valid = 1;
+        } else {
+            printf(RED "Error: Account number must be exactly 10 digits.\n" RESET);
+            valid = 0;
+        }
+    } while (!valid);
+    
+    
+    int isDuplicate = 0;
+    for(int j = 0; j < *numAccptr; j++) {
+        if(accounts[j].account_number == accounts[*numAccptr].account_number) {
+            isDuplicate = 1;
+            break;
+        }
+    }
+    if(isDuplicate) {
+        printf(RED "Error: This account number already exists in the system.\n" RESET);
+        return; 
+    }
 
-    printf("enter Account number: ");
-    scanf("%lld",&accounts[*numAccptr].account_number);
-    while (getc(stdin) != '\n');
-    printf("\nenter Account firstname: ");
+    while (getchar() != '\n'); 
+
+    printf(YELLOW "\nEnter Account firstname: " RESET);
     gets(accounts[*numAccptr].firstname);
-    printf("\nenter Account last name: ");
+    
+    printf(YELLOW "\nEnter Account last name: " RESET);
     gets(accounts[*numAccptr].lastname);
-    printf("\nenter Account address: ");
-    gets(accounts[*numAccptr].address);
-    printf("\nenter Account balance: ");
-    scanf("%lf",&accounts[*numAccptr].balance);
-    while (getc(stdin) != '\n');
-    printf("\nenter Account mobile number: ");
-    gets(accounts[*numAccptr].mobile);
-    printf("\nenter Account creation month(1-12): ");
-    scanf("%d",&accounts[*numAccptr].date_opened.month);
-    printf("\nenter Account creation year: ");
-    scanf("%d",&accounts[*numAccptr].date_opened.year); 
 
-    accounts[*numAccptr].status=1;
-    accounts[*numAccptr].remianing_daily_limit= 50000.00;
+    do {
+        printf(YELLOW "\nEnter Email Address: " RESET);
+        gets(accounts[*numAccptr].address);
+        if (mailVal(accounts[*numAccptr].address)) {
+            valid = 1;
+        } else {
+            printf(RED "Error: Invalid email format. Must contain '@' and '.'\n" RESET);
+            valid = 0;
+        }
+    } while (!valid);
+
+    do {
+        printf(YELLOW "\nEnter Account balance: " RESET);
+        if (scanf("%lf", &accounts[*numAccptr].balance) == 1 && accounts[*numAccptr].balance >= 0) {
+            valid = 1;
+        } else {
+            printf(RED "Error: Invalid balance. Please enter a positive number.\n" RESET);
+            while (getchar() != '\n'); 
+            valid = 0;
+        }
+    } while (!valid);
+
+    while (getchar() != '\n'); 
+
+    do {
+        printf(YELLOW "\nEnter Account mobile number: " RESET);
+        gets(accounts[*numAccptr].mobile);
+        if (digitVal(accounts[*numAccptr].mobile) && strlen(accounts[*numAccptr].mobile) > 0) {
+            valid = 1;
+        } else {
+            printf(RED "Error: Mobile number must contain digits only.\n" RESET);
+            valid = 0;
+        }
+    } while (!valid);
+
+    do {
+        printf(YELLOW "\nEnter Account creation month (1-12): " RESET);
+        if (scanf("%d", &accounts[*numAccptr].date_opened.month) == 1 && 
+            accounts[*numAccptr].date_opened.month >= 1 && 
+            accounts[*numAccptr].date_opened.month <= 12) {
+            valid = 1;
+        } else {
+            printf(RED "Error: Invalid month. Enter 1-12.\n" RESET);
+            while (getchar() != '\n');
+            valid = 0;
+        }
+    } while (!valid);
+
+    do {
+        printf(YELLOW "\nEnter Account creation year: " RESET);
+        if (scanf("%d", &accounts[*numAccptr].date_opened.year) == 1 && accounts[*numAccptr].date_opened.year > 1900) {
+            valid = 1;
+        } else {
+            printf(RED "Error: Invalid year.\n" RESET);
+            while (getchar() != '\n');
+            valid = 0;
+        }
+    } while (!valid);
+
+    accounts[*numAccptr].status = 1;
+    accounts[*numAccptr].remianing_daily_limit = 50000.00;
     (*numAccptr)++;
 
-    printf("\nSuccess, new account added with index %d\n\n",((*numAccptr)-1));
-    printf("account name:%s %s   account number: %lld\n\n",accounts[(*numAccptr)-1].firstname,accounts[(*numAccptr)-1].lastname,accounts[(*numAccptr)-1].account_number );
-
+    printf(GREEN "\nSuccess, new account added with index %d\n" RESET, ((*numAccptr) - 1));
 }
 
 void swap(Account *a, Account *b) {
@@ -133,9 +223,14 @@ void sortByStatus(Account *accounts, int n) {
 
 void printaccdetails(Account *accounts, int *numAccptr) {
     int count = *numAccptr, choice;
-    if (count == 0) { printf("No accounts to print.\n"); return; }
-
-    printf("\n1.Name 2.Balance 3.Date 4.Status 5.None\nSort by: ");
+    if (count == 0) { 
+        printf(RED "No accounts to print.\n" RESET); 
+        return; 
+    }
+    
+    printf(BLUE "\n--- Sort Options ---\n" RESET);
+    printf(CYAN "1. Name\n2. Balance\n3. Date\n4. Status\n5. None\n" RESET);
+    printf(YELLOW "Sort by: " RESET);
     scanf("%d", &choice);
 
     if (choice == 1) sortByName(accounts, count);
@@ -143,112 +238,128 @@ void printaccdetails(Account *accounts, int *numAccptr) {
     else if (choice == 3) sortByDate(accounts, count);
     else if (choice == 4) sortByStatus(accounts, count);
 
-    printf("\n--- All Accounts List ---\n");
+    printf(BLUE "\n--- All Accounts List ---\n" RESET);
     for (int i = 0; i < count; i++) {
-        printf("\nAccount Number: %lld\n", accounts[i].account_number);
-        printf("Name: %s %s\n", accounts[i].firstname, accounts[i].lastname);
-        printf("Address: %s\n", accounts[i].address);
-        printf("Balance: %.2lf\n", accounts[i].balance);
-        printf("Mobile: %s\n", accounts[i].mobile);
-        printf("Opened: %d/%d\n", accounts[i].date_opened.month, accounts[i].date_opened.year);
-        printf("Status: %s\n", accounts[i].status ? "ACTIVE" : "INACTIVE");
+        printf(BLUE "\n------------------------------\n" RESET);
+        printf(CYAN "Account Number: " RESET PURPLE "%lld\n" RESET, accounts[i].account_number);
+        printf(CYAN "Name:           " RESET "%s %s\n", accounts[i].firstname, accounts[i].lastname);
+        printf(CYAN "Address:        " RESET "%s\n", accounts[i].address);
+        printf(CYAN "Balance:        " RESET YELLOW "%.2lf\n" RESET, accounts[i].balance);
+        printf(CYAN "Mobile:         " RESET "%s\n", accounts[i].mobile);
+        printf(CYAN "Opened:         " RESET "%d/%d\n", accounts[i].date_opened.month, accounts[i].date_opened.year);
+        
+        if (accounts[i].status) {
+            printf(CYAN "Status:         " RESET GREEN "ACTIVE" RESET "\n");
+        } else {
+            printf(CYAN "Status:         " RESET RED "INACTIVE" RESET "\n");
+        }
     }
-    printf("\nTotal Accounts: %d\n", count);
+    printf(BLUE "------------------------------\n" RESET);
+    printf(BLUE "Total Accounts: %d\n" RESET, count);
 }
+
 void deleteacc(Account *accounts, int *numAccptr) {
     long long target;
     int foundInd = -1;
-
     if (*numAccptr == 0) {
-        printf("\nNo accounts available to delete.\n");
+        printf(RED "\nNo accounts available to delete.\n" RESET);
         return;
     }
-
-    printf("Enter Account Number to delete: ");
+    printf(YELLOW "Enter Account Number to delete: " RESET);
     scanf("%lld", &target);
-
-
     for (int i = 0; i < *numAccptr; i++) {
         if (accounts[i].account_number == target) {
             foundInd = i;
             break;
         }
     }
-
     if (foundInd == -1) {
-        printf("\nAccount not found.\n");
+        printf(RED "\nAccount not found.\n" RESET);
         return;
     }
-
     for (int j = foundInd; j < (*numAccptr) - 1; j++) {
         accounts[j] = accounts[j + 1];
     }
     (*numAccptr)--;
-
-    printf("\nAccount %lld successfully deleted.\n", target);
+    printf(GREEN "\nAccount %lld successfully deleted.\n" RESET, target);
 }
 
-void modifyacc(Account *accounts,int *numAccptr){
-    int i=0,foundind=-1,choice;
+void modifyacc(Account *accounts, int *numAccptr) {
+    int i = 0, foundind = -1, choice, valid = 0;
     long long useracc;
-    printf("enter account number");
-    scanf("%lld",&useracc);
-    while(i<(*numAccptr)){
-        if(useracc==accounts[i].account_number){
-            foundind=i;
+    char userin[100]; 
+    
+    printf(YELLOW "Enter account number to modify: " RESET);
+    scanf("%lld", &useracc);
+    while (i < (*numAccptr)) {
+        if (useracc == accounts[i].account_number) {
+            foundind = i;
+            break;
         }
         i++;
     }
-    
-    if(foundind==-1){
-        printf("account not found");
+    if (foundind == -1) {
+        printf(RED "Error: Account not found.\n" RESET);
         return;
     }
-
-    printf("What would you like to modify");
-    printf("1- Name");
-    printf("2- Mobile Number");
-    printf("3- email address");
-    printf("enter your choice (1-3)");
-    scanf("%d",&choice);
-    while(choice<1||choice>3){
-        printf("invalid choice, please re-enter your choice");
-        scanf("%d",&choice);
+    
+    printf(YELLOW "What would you like to modify?\n" RESET);
+    printf(CYAN "1- Name\n" RESET);
+    printf(CYAN "2- Mobile Number\n" RESET);
+    printf(CYAN "3- Email Address\n" RESET);
+    printf(YELLOW "Enter your choice (1-3): " RESET);
+    scanf("%d", &choice);
+    
+    while (choice < 1 || choice > 3) {
+        printf(RED "Error: Invalid choice, please re-enter (1-3): " RESET);
+        scanf("%d", &choice);
     }
     while (getchar() != '\n');
-
-    switch (choice)
-    {
+    
+    switch (choice) {
     case 1:
-        printf("enter first name");
-        char newFirst[15];
-        gets(newFirst);
-        char newLast[15];
-        gets(newLast);
-        strcpy(accounts[foundind].firstname,newFirst);
-        strcpy(accounts[foundind].lastname,newLast);
+        printf(YELLOW "Enter first name: " RESET);
+        gets(accounts[foundind].firstname);
+        printf(YELLOW "Enter last name: " RESET);
+        gets(accounts[foundind].lastname);
+        printf(GREEN "Name updated successfully.\n" RESET);
         break;
     case 2:
-        printf("enter mobile number");
-        char newNum[20];
-        gets(newNum);
-        strcpy(accounts[foundind].mobile,newNum);
+        do {
+            printf(YELLOW "Enter new mobile number: " RESET);
+            gets(userin); 
+            if (digitVal(userin) && strlen(userin) > 0) {
+                strcpy(accounts[foundind].mobile, userin);
+                valid = 1;
+            } else {
+                printf(RED "Error: Mobile number must contain digits only.\n" RESET);
+                valid = 0;
+            }
+        } while (!valid);
+        printf(GREEN "Mobile number updated successfully.\n" RESET);
         break;
     case 3:
-        printf("enter email address");
-        char newAdd[20];
-        gets(newAdd);
-        strcpy(accounts[foundind].address,newAdd);
+        do {
+            printf(YELLOW "Enter new email address: " RESET);
+            gets(userin); 
+            if (mailVal(userin)) {
+                strcpy(accounts[foundind].address, userin);
+                valid = 1;
+            } else {
+                printf(RED "Error: Invalid email format. Must contain '@' and '.'\n" RESET);
+                valid = 0;
+            }
+        } while (!valid);
+        printf(GREEN "Email address updated successfully.\n" RESET);
         break;
-    
-    
     }
-
 }
+
 void changeStatus(Account *accounts,int *numAccptr){
     int i=0,foundind=-1,newStatus;
     long long useracc;
-    printf("enter account number: ");
+    
+    printf(YELLOW "enter account number: " RESET);
     scanf("%lld",&useracc);
     while(i<(*numAccptr)){
         if(useracc==accounts[i].account_number){
@@ -259,30 +370,30 @@ void changeStatus(Account *accounts,int *numAccptr){
     }
     
     if(foundind==-1){
-        printf("account not found");
+        printf(RED "account not found" RESET);
         return;
     }
 
-    printf("current status is %s\n", accounts[foundind].status ? "ACTIVE" : "INACTIVE");
-    printf("enter new status (1 for active, 0 for inactive): ");
+    printf("current status is %s\n", accounts[foundind].status ? GREEN "ACTIVE" RESET : RED "INACTIVE" RESET);
+    printf(YELLOW "enter new status (1 for active, 0 for inactive): " RESET);
     scanf("%d", &newStatus);
 
     if(newStatus == accounts[foundind].status){
-        printf("ATTENTION: you wish to change your current account status back to the same one\n");
+        printf(YELLOW "ATTENTION: you wish to change your current account status back to the same one\n" RESET);
     }
     else if(newStatus == 0 || newStatus == 1){
         accounts[foundind].status = newStatus;
-        printf("status changed successfully\n");
+        printf(GREEN "status changed successfully\n" RESET);
     }
     else{
-        printf("invalid status\n");
+        printf(RED "invalid status\n" RESET);
     }
 }
 
 void saveAccounts(Account *accounts, int *numAccptr) {
     FILE *file = fopen("accounts.txt", "w");
     if (file == NULL) {
-        printf("Error: Could not open file for saving.\n");
+        printf(RED "Error: Could not open file for saving.\n" RESET);
         return;
     }
 
@@ -298,7 +409,6 @@ void saveAccounts(Account *accounts, int *numAccptr) {
                 accounts[i].date_opened.year,
                 accounts[i].status ? "active" : "inactive");
     }
-
     fclose(file);
-    printf("All changes saved successfully to accounts.txt\n");
+    printf(GREEN "All changes saved successfully to accounts.txt\n" RESET);
 }

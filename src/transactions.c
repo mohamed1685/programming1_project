@@ -4,13 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-
 void report(){
-
     int i;
     long long account_number;
-    printf("Enter a bank account number: ");
+    printf(YELLOW "Enter a bank account number: " RESET);
     scanf("%lld",&account_number);
 
     char file_name[64];
@@ -19,25 +16,24 @@ void report(){
     FILE * file_ptr = fopen(file_name,"r");
     
     if(file_ptr == NULL){
-        printf("failed to open file\n");
+        printf(RED "Error: Failed to open file\n" RESET);
         exit(1);
     }
-
-
 
     char lines[5][50];
     int count = 0;
 
-     while (fgets(lines[count % 5], 50, file_ptr)) {
+    while (fgets(lines[count % 5], 50, file_ptr)) {
         count++;
     }
 
     fclose(file_ptr);
 
     int start = (count > 5) ? count - 5 : 0;
-
+    
+    printf(BLUE "\n--- Last 5 Transactions ---\n" RESET);
     for ( i = start; i < count; i++) {
-        printf("%s", lines[i % 5]);
+        printf(CYAN "%s" RESET, lines[i % 5]);
     }
     printf("\n");
 }
@@ -50,8 +46,8 @@ void add_transfer_transaction(long long reciver_number,long long sender_number,f
     
     FILE * file_ptr = fopen(reciever_file_name,"a");
     if(file_ptr == NULL){
-        printf("failed to open file\n");
-                return;
+        printf(RED "Error: Failed to open file\n" RESET);
+        return;
     }
     char new_line1[50];
 
@@ -65,8 +61,8 @@ void add_transfer_transaction(long long reciver_number,long long sender_number,f
     file_ptr = fopen(sender_file_name,"a");
 
     if(file_ptr == NULL){
-        printf("failed to open file\n");
-                return;
+        printf(RED "Error: Failed to open file\n" RESET);
+        return;
     }
 
     char new_line2[50];
@@ -74,7 +70,6 @@ void add_transfer_transaction(long long reciver_number,long long sender_number,f
     sprintf(new_line2,"\ntransfer_out,%f",transfer_amount);
     fprintf(file_ptr,"%s",new_line2);
     fclose(file_ptr); 
-
 }
 
 
@@ -85,7 +80,7 @@ void add_withdraw_transaction(long long account_number,float withdraw_amount){
     FILE * file_ptr = fopen(file_name,"a");
     
     if(file_ptr == NULL){
-        printf("failed to open file\n");
+        printf(RED "Error: Failed to open file\n" RESET);
         return;
     }
     char new_line[50];
@@ -93,7 +88,6 @@ void add_withdraw_transaction(long long account_number,float withdraw_amount){
     sprintf(new_line,"\nwithdraw,%f",withdraw_amount);
     fprintf(file_ptr,"%s",new_line);
     fclose(file_ptr);
-
 }
 
 void add_deposit_transaction(long long account_number, float deposit_amount) {
@@ -102,7 +96,7 @@ void add_deposit_transaction(long long account_number, float deposit_amount) {
 
     FILE *file_ptr = fopen(file_name, "a");
     if (!file_ptr) {
-        printf("failed to open file\n");
+        printf(RED "Error: Failed to open file\n" RESET);
         return;
     }
 
@@ -115,42 +109,46 @@ void transfer(Account accounts[],int array_size){
     int sender_index,reciever_index;
     float transfer_amount;
 
-
     do{
-    printf("Enter account number of sender: ");
-    scanf("%lld",&sender_number);
+        printf(YELLOW "Enter account number of sender: " RESET);
+        scanf("%lld",&sender_number);
     }
     while (check_account(sender_number,accounts,array_size,&sender_index) !=1);
 
     do{
-    printf("Enter account number of reciever: ");
-    scanf("%lld",&reciever_number);
+        printf(YELLOW "Enter account number of reciever: " RESET);
+        scanf("%lld",&reciever_number);
     }
     while (check_account(reciever_number,accounts,array_size,&reciever_index) !=1);
+    
+    if (sender_number == reciever_number) {
+        printf(RED "Error: Cannot transfer money to the same account.\n" RESET);
+        return;
+    }
 
     int flag;
     do {
-    flag =1;
-    printf("Enter transfer amount: ");
-    scanf("%f",&transfer_amount);    
+        flag = 1;
+        printf(YELLOW "Enter transfer amount: " RESET);
+        scanf("%f",&transfer_amount);    
     
 
-    if(transfer_amount >accounts[sender_index].balance){
-        printf("transfer amount larger then sender balance\n");
-        flag = 0;
+        if(transfer_amount > accounts[sender_index].balance){
+            printf(RED "Error: Transfer amount larger then sender balance\n" RESET);
+            flag = 0;
+        }
+        if (transfer_amount <= 0) {
+            printf(RED "Error: Invalid amount\n" RESET);
+            flag = 0;
+        }
     }
-    if (transfer_amount <= 0) {
-        printf("invalid amount\n");
-        flag = 0;
-    }
-}
     while (flag==0);
 
     accounts[sender_index].balance -= transfer_amount;
     accounts[reciever_index].balance += transfer_amount;
     
+    printf(GREEN "Transfer successful!\n" RESET);
     add_transfer_transaction(reciever_number,sender_number,transfer_amount);
-
 }
 
 int check_account(long long sender_number,Account accounts[],int  array_size,int * index){
@@ -160,17 +158,15 @@ int check_account(long long sender_number,Account accounts[],int  array_size,int
             if(accounts[i].status == 1){
                 *index = i;
                 return 1;
-
             }
             else{
-                printf("account is inactive\n");
+                printf(RED "Error: Account is INACTIVE\n" RESET);
                 return 0;
             }
         }
     }
-    printf("couldnt find account\n");
+    printf(RED "Error: Could not find account\n" RESET);
     return 0 ;
-
 }
 
 void withdraw(Account accounts[],int size){
@@ -178,31 +174,44 @@ void withdraw(Account accounts[],int size){
     int account_index;
     float withdrawl_amount;
     do{
-    printf("Enter account number: ");
-    scanf("%lld",&account_number);
+        printf(YELLOW "Enter account number: " RESET);
+        scanf("%lld",&account_number);
     }
     while (check_account(account_number,accounts,size,&account_index) !=1);
 
 
     int flag =1;
     do {
-        printf("Enter withdrawl amount: ");
+        printf(YELLOW "Enter withdrawal amount: " RESET);
         scanf("%f",&withdrawl_amount);
+        
+        
+        if(withdrawl_amount <= 0) {
+            printf(RED "Error: Invalid amount\n" RESET);
+            flag = 0;
+            continue;
+        }
+
         flag = dailly_limit(accounts,withdrawl_amount,account_index);
 
-        if(withdrawl_amount >10000.0){
-            printf(" transaction can not exceed 10,000$\n");
+        if(withdrawl_amount > 10000.0){
+            printf(RED "Error: Transaction can not exceed 10,000$\n" RESET);
             flag = 0;
         }
+        
+        
+        if(withdrawl_amount > accounts[account_index].balance) {
+             printf(RED "Error: Insufficient funds. Balance: %.2f\n" RESET, accounts[account_index].balance);
+             flag = 0;
+        }
+
     }
     while(flag != 1);
 
     accounts[account_index].balance -= withdrawl_amount;
     accounts[account_index].remianing_daily_limit -= withdrawl_amount;
-    printf("withdrawl successful\n");
+    printf(GREEN "Withdrawal successful\n" RESET);
     add_withdraw_transaction(account_number,withdrawl_amount);
-
-
 }
 
 
@@ -211,23 +220,30 @@ void deposit(Account accounts[],int size){
     int account_index;
     float deposit_amount;
     do{
-    printf("Enter account number: ");
-    scanf("%lld",&account_number);
+        printf(YELLOW "Enter account number: " RESET);
+        scanf("%lld",&account_number);
     }
     while (check_account(account_number,accounts,size,&account_index) !=1);
 
-        printf("Enter deposit amount");
+    do {
+        printf(YELLOW "Enter deposit amount: " RESET);
         scanf("%f",&deposit_amount);
         
-        accounts[account_index].balance += deposit_amount;
+        if(deposit_amount <= 0) {
+            printf(RED "Error: Invalid amount\n" RESET);
+        }
+    } while(deposit_amount <= 0);
+        
+    accounts[account_index].balance += deposit_amount;
+    printf(GREEN "Deposit successful\n" RESET);
 
-        add_deposit_transaction(account_number,deposit_amount);
+    add_deposit_transaction(account_number,deposit_amount);
 }
 
 
 int dailly_limit(Account accounts[],float withdrawl_amount,int account_index){
     if(withdrawl_amount > accounts[account_index].remianing_daily_limit){
-        printf("this transaction exceeds daily limit\n");
+        printf(RED "Error: This transaction exceeds daily limit\n" RESET);
         return 0 ;
     }
     else return 1;

@@ -9,7 +9,7 @@ void advSearch(Account accounts[],int size){
     int i;
     int flag = 0;
     char keyword[25];
-    printf("enter a keyword: ");
+    printf(YELLOW"enter a keyword: "RESET);
     gets(keyword);
     printf("Search results: \n\n");
     for (i =0;i<size;i++){
@@ -21,7 +21,7 @@ void advSearch(Account accounts[],int size){
         }
     }
     if (flag ==0){
-        printf("no search results found");
+        printf(RED"no search results found"RESET);
         return;
     }
 }
@@ -29,7 +29,7 @@ void advSearch(Account accounts[],int size){
 void search(Account accounts[],int *numAccptr){
     int i=0,foundind=-1;
     long long useracc;
-    printf("enter account number");
+    printf(YELLOW"enter account number"RESET);
     scanf("%lld",&useracc);
     while(i<(*numAccptr)){
         if(useracc==accounts[i].account_number){
@@ -39,7 +39,7 @@ void search(Account accounts[],int *numAccptr){
     }
     
     if(foundind==-1){
-        printf("account not found");
+        printf(RED"account not found"RESET);
         return;
     }
 
@@ -59,10 +59,10 @@ void printacc(Account accounts[],int i){
         printf("account month opened: %d\n",accounts[i].date_opened.month);
         printf("account year opened: %d\n",accounts[i].date_opened.year);
         if(accounts[i].status){
-            printf("account status: ACTIVE\n\n");
+            printf("account status: " GREEN"ACTIVE\n\n"RESET);
         }
         else if(accounts[i].status==0){
-            printf("account status: INACTIVE\n\n");
+            printf("account status: "RED"INACTIVE\n\n"RESET);
         }
 
 
