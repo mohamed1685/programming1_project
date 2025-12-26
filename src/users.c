@@ -74,6 +74,7 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
     
     if(loginstatus){
         while(userin!=14){
+            printf("\n");
             printf("*****************************************\n");
             printf("* Welcome to The Bank System       *\n");
             printf("*****************************************\n");

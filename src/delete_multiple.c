@@ -28,12 +28,18 @@ else{
 
 
 void delete_by_status(Account accounts[],int size){
-    
+    Date current_date;
     int i,flag=0;
+
+    printf("enter current year: ");
+    scanf("%i",&current_date.year);
+    printf("enter current month: ");
+    scanf("%i",&current_date.month);
+
     
     
     for (i = 0; i<size;i++){
-        if(accounts[i].status == 0 && accounts[i].balance == 0&&1){
+        if(accounts[i].status == 0 && accounts[i].balance == 0&&date_check(current_date,accounts[i].date_opened)){
             delete_account(accounts,size,accounts[i].account_number);
             flag = 1;
         }
@@ -95,3 +101,15 @@ void delete_multiple(Account accounts[], int size){
 
 }
 
+int date_check(Date current_date,Date past_date){
+    int current_date_in_months = current_date.month +(current_date.year)*12;
+    int past_date_in_months = past_date.month +(past_date.year)*12;
+    if((current_date_in_months - past_date_in_months) >3){
+        return 1;
+    }
+    else {
+        return 0;
+    }
+
+
+}

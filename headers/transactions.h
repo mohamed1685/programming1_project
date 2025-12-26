@@ -29,6 +29,8 @@ int check_account(long long account_number,
                   int array_size,
                   int *index);
 
+int dailly_limit(Account accounts[],float withdrawl_amount,int account_index);
+
 void report();
 
 

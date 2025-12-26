@@ -188,10 +188,8 @@ void withdraw(Account accounts[],int size){
     do {
         printf("Enter withdrawl amount: ");
         scanf("%f",&withdrawl_amount);
-        if(withdrawl_amount > accounts[account_index].remianing_daily_limit){
-            printf("this transaction exceedss daily limit\n");
-            flag = 0;
-        }
+        flag = dailly_limit(accounts,withdrawl_amount,account_index);
+
         if(withdrawl_amount >10000.0){
             printf(" transaction can not exceed 10,000$\n");
             flag = 0;
@@ -224,4 +222,13 @@ void deposit(Account accounts[],int size){
         accounts[account_index].balance += deposit_amount;
 
         add_deposit_transaction(account_number,deposit_amount);
+}
+
+
+int dailly_limit(Account accounts[],float withdrawl_amount,int account_index){
+    if(withdrawl_amount > accounts[account_index].remianing_daily_limit){
+        printf("this transaction exceeds daily limit\n");
+        return 0 ;
+    }
+    else return 1;
 }
