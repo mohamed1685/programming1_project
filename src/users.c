@@ -99,71 +99,71 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
             getchar();
             switch(userin) {
                 case 1:
-            {
+            
                 addacc(accounts,numAccptr);
                 break;
-            }
+            
                 case 2:
-            {
+            
                 deleteacc(accounts, numAccptr);
                 break;
-            }
+            
                 case 3:
-            {
+            
                 modifyacc(accounts,numAccptr);
                 break;
-            }
+            
                 case 4:
-            {
-                search(accounts,*numAccptr);
+            
+                search(accounts,numAccptr);
                 break;
-            }
+            
                 case 5:
-            {
-                
+            
+                advSearch(accounts,*numAccptr);
                 break;
-            }
+            
 
                 case 6:
-            {
+            
                 changeStatus(accounts,numAccptr);
                 break;
-            }
+            
 
                 case 7:
-            {
+            
                 withdraw(accounts,*numAccptr);
                 break;
-            }
+            
                 case 8:
-            {
+            
                 deposit(accounts,*numAccptr);
                 break;
-            }
+            
                 case 9:
-            {   transfer(accounts,*numAccptr);
+                transfer(accounts,*numAccptr);
                 break;
-            }
+            
                 case 10:
-            {
+            
                 report();
                 break;
-            }
+            
                 case 11:
-            {
+            
                 printaccdetails(accounts,numAccptr);
                 break;
-            };
+            
                 case 12:
-            {   
+            
                 saveAccounts(accounts, numAccptr);
                 break;
-            }
+            
                 case 13:
-            {
+            
                 printf("Succesfully exited system,Goodbye");
                 break;
-            }
+            
             
 
             }

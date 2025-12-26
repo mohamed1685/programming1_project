@@ -91,29 +91,69 @@ void addacc(Account *accounts,int *numAccptr)
 
 }
 
-    void printaccdetails(Account *accounts,int *numAccptr){
-        int i=0;
-        int count= *numAccptr;
-        printf("Successfully Loaded %d accounts", count);
-        while(i<count){
-            printf("account #%d\n",i+1);
-            printf("account number: %lld\n",accounts[i].account_number);
-            printf("account first name: %s\n",accounts[i].firstname);
-            printf("account last name: %s\n",accounts[i].lastname);
-            printf("account address: %s\n",accounts[i].address);
-            printf("account balance: %.2lf\n",accounts[i].balance);
-            printf("account mobile number: %s\n",accounts[i].mobile);
-            printf("account month opened: %d\n",accounts[i].date_opened.month);
-            printf("account year opened: %d\n",accounts[i].date_opened.year);
-            if(accounts[i].status){
-                printf("account status: ACTIVE\n\n\n\n\n");
-            }
-            else if(accounts[i].status==0){
-                printf("account status: INACTIVE\n\n\n\n\n");
-            }
-            i++;
+void swap(Account *a, Account *b) {
+    Account t = *a; *a = *b; *b = t;
+}
 
+void sortByName(Account *accounts, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (strcmp(accounts[j].firstname, accounts[j + 1].firstname) > 0)
+                swap(&accounts[j], &accounts[j + 1]);
+        }
     }
+}
+
+void sortByBalance(Account *accounts, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (accounts[j].balance > accounts[j + 1].balance)
+                swap(&accounts[j], &accounts[j + 1]);
+        }
+    }
+}
+
+void sortByDate(Account *accounts, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (accounts[j].date_opened.year > accounts[j + 1].date_opened.year || (accounts[j].date_opened.year == accounts[j + 1].date_opened.year && accounts[j].date_opened.month > accounts[j + 1].date_opened.month))
+                swap(&accounts[j], &accounts[j + 1]);
+        }
+    }
+}
+
+void sortByStatus(Account *accounts, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (accounts[j].status < accounts[j + 1].status)
+                swap(&accounts[j], &accounts[j + 1]);
+        }
+    }
+}
+
+void printaccdetails(Account *accounts, int *numAccptr) {
+    int count = *numAccptr, choice;
+    if (count == 0) { printf("No accounts to print.\n"); return; }
+
+    printf("\n1.Name 2.Balance 3.Date 4.Status 5.None\nSort by: ");
+    scanf("%d", &choice);
+
+    if (choice == 1) sortByName(accounts, count);
+    else if (choice == 2) sortByBalance(accounts, count);
+    else if (choice == 3) sortByDate(accounts, count);
+    else if (choice == 4) sortByStatus(accounts, count);
+
+    printf("\n--- All Accounts List ---\n");
+    for (int i = 0; i < count; i++) {
+        printf("\nAccount Number: %lld\n", accounts[i].account_number);
+        printf("Name: %s %s\n", accounts[i].firstname, accounts[i].lastname);
+        printf("Address: %s\n", accounts[i].address);
+        printf("Balance: %.2lf\n", accounts[i].balance);
+        printf("Mobile: %s\n", accounts[i].mobile);
+        printf("Opened: %d/%d\n", accounts[i].date_opened.month, accounts[i].date_opened.year);
+        printf("Status: %s\n", accounts[i].status ? "ACTIVE" : "INACTIVE");
+    }
+    printf("\nTotal Accounts: %d\n", count);
 }
 void deleteacc(Account *accounts, int *numAccptr) {
     long long target;

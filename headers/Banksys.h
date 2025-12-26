@@ -16,6 +16,7 @@
 typedef struct {
     char username[Max_input_length];
     char password[Max_input_length];
+    
 } User;
 
 
@@ -51,5 +52,11 @@ void deleteacc(Account *accounts, int *numAccptr) ;
 void modifyacc(Account *accounts,int *numAccptr);
 void changeStatus(Account *accounts,int *numAccptr);
 void saveAccounts(Account *accounts, int *numAccptr);
+void printaccdetails(Account *accounts, int *numAccptr);
+void sortByStatus(Account *accounts, int n);
+void sortByDate(Account *accounts, int n);
+void sortByBalance(Account *accounts, int n);
+void sortByName(Account *accounts, int n);
+
 
 #endif

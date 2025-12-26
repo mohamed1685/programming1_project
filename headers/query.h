@@ -3,13 +3,9 @@
 #ifndef Q
 #define Q
 
-void search(Account accounts[],int size);
-
+void advSearch(Account accounts[],int size);
+void search(Account accounts[],int *numAccptr);
 void printacc(Account accounts[],int i);
-
-
-
-
 
 
 #endif

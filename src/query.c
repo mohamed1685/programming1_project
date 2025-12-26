@@ -5,7 +5,7 @@
 
 
 
-void search(Account accounts[],int size){
+void advSearch(Account accounts[],int size){
     int i;
     int flag = 0;
     char keyword[25];
@@ -15,7 +15,7 @@ void search(Account accounts[],int size){
     for (i =0;i<size;i++){
         char full_name[50];
         sprintf(full_name,"%s %s",accounts[i].firstname,accounts[i].lastname);
-        if(strstr(accounts[i].address,keyword) != NULL|strstr(full_name,keyword) != NULL){
+        if(strstr(accounts[i].address,keyword) != NULL||strstr(full_name,keyword) != NULL){
             flag = 1;
             printacc(accounts,i);
         }
@@ -25,6 +25,28 @@ void search(Account accounts[],int size){
         return;
     }
 }
+
+void search(Account accounts[],int *numAccptr){
+    int i=0,foundind=-1;
+    long long useracc;
+    printf("enter account number");
+    scanf("%lld",&useracc);
+    while(i<(*numAccptr)){
+        if(useracc==accounts[i].account_number){
+            foundind=i;
+        }
+        i++;
+    }
+    
+    if(foundind==-1){
+        printf("account not found");
+        return;
+    }
+
+    printacc(accounts,foundind);
+}
+
+
 
 void printacc(Account accounts[],int i){
 
