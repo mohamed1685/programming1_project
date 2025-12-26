@@ -1,6 +1,7 @@
 #include "../headers/Banksys.h"
 #include "../headers/transactions.h"
 #include "../headers/query.h"
+#include "../headers/delete_multiple.h"
 #include <ctype.h> 
 
 void loadUsers(User *users, int *numUsersPtr){
@@ -161,7 +162,7 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
                 break;
                 
                 case 13:
-            
+                delete_multiple(accounts,*numAccptr);
                 
                 break;
 
