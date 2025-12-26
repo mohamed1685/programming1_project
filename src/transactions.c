@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "../headers/Banksys.h"
 #include "../headers/transactions.h"
+#include <stdlib.h>
+#include <string.h>
 
 
 
@@ -11,7 +13,7 @@ void report(){
     printf("Enter a bank account number: ");
     scanf("%lld",&account_number);
 
-    char file_name[20];
+    char file_name[64];
     sprintf(file_name,"./transactions/%lld.txt",account_number);
 
     FILE * file_ptr = fopen(file_name,"r");
@@ -20,6 +22,7 @@ void report(){
         printf("failed to open file\n");
         exit(1);
     }
+
 
 
     char lines[5][50];
@@ -36,7 +39,7 @@ void report(){
     for ( i = start; i < count; i++) {
         printf("%s", lines[i % 5]);
     }
-
+    printf("\n");
 }
 
 
@@ -76,7 +79,7 @@ void add_transfer_transaction(long long reciver_number,long long sender_number,f
 
 
 void add_withdraw_transaction(long long account_number,float withdraw_amount){
-    char file_name[20];
+    char file_name[64];
     sprintf(file_name,"./transactions/%lld.txt",account_number);
 
     FILE * file_ptr = fopen(file_name,"a");
@@ -134,6 +137,10 @@ void transfer(Account accounts[],int array_size){
 
     if(transfer_amount >accounts[sender_index].balance){
         printf("transfer amount larger then sender balance\n");
+        flag = 0;
+    }
+    if (transfer_amount <= 0) {
+        printf("invalid amount\n");
         flag = 0;
     }
 }
