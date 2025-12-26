@@ -72,7 +72,7 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
     int userin=0;
     
     if(loginstatus){
-        while(userin!=13){
+        while(userin!=14){
             printf("*****************************************\n");
             printf("* Welcome to The Bank System       *\n");
             printf("*****************************************\n");
@@ -90,7 +90,8 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
             printf("* 10. Report                           *\n");
             printf("* 11. Print                            *\n");
             printf("* 12. Save                             *\n");
-            printf("* 13. Quit                             *\n");
+            printf("* 13. Delete Multiple                  *\n");
+            printf("* 14. Quit                             *\n");
             printf("*****************************************\n");
             printf("Choice: ");
             
@@ -158,8 +159,13 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
             
                 saveAccounts(accounts, numAccptr);
                 break;
-            
+                
                 case 13:
+            
+                
+                break;
+
+                case 14:
             
                 printf("Succesfully exited system,Goodbye");
                 break;
