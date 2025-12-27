@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+//prints last 5 transactions
 void report(){
     int i;
     long long account_number;
@@ -37,7 +38,7 @@ void report(){
     printf("\n");
 }
 
-
+//records a given tranfer in a txt file
 void add_transfer_transaction(long long reciver_number,long long sender_number,float transfer_amount){
     
     char reciever_file_name[70] ;
@@ -71,7 +72,7 @@ void add_transfer_transaction(long long reciver_number,long long sender_number,f
     fclose(file_ptr); 
 }
 
-
+//records a given withdraaw in a txt file
 void add_withdraw_transaction(long long account_number,float withdraw_amount){
     char file_name[64];
     sprintf(file_name,"./transactions/%lld.txt",account_number);
@@ -89,6 +90,8 @@ void add_withdraw_transaction(long long account_number,float withdraw_amount){
     fclose(file_ptr);
 }
 
+
+//records a given deposit in a txt file
 void add_deposit_transaction(long long account_number, float deposit_amount) {
     char file_name[50];
     snprintf(file_name, sizeof(file_name), "./transactions/%lld.txt", account_number);
@@ -102,6 +105,7 @@ void add_deposit_transaction(long long account_number, float deposit_amount) {
     fprintf(file_ptr, "\ndeposit,%.2f", deposit_amount);
     fclose(file_ptr);
 }
+
 
 void transfer(Account accounts[],int array_size){
     long long  sender_number,reciever_number;
@@ -150,10 +154,11 @@ void transfer(Account accounts[],int array_size){
     add_transfer_transaction(reciever_number,sender_number,transfer_amount);
 }
 
-int check_account(long long sender_number,Account accounts[],int  array_size,int * index){
+//checks if an account exists and is active if both condition are met it returns the index of the given account number
+int check_account(long long account_number,Account accounts[],int  array_size,int * index){
     int i ;
     for(i =0;i<array_size;i++){
-        if (accounts[i].account_number == sender_number){
+        if (accounts[i].account_number == account_number){
             if(accounts[i].status == 1){
                 *index = i;
                 return 1;
@@ -247,7 +252,7 @@ int dailly_limit(Account accounts[],float withdrawl_amount,int account_index){
     else return 1;
 }
 
-
+//prompts the user to input an account number and performs full validation on that account number until a valid number is input
 long long get_account_number(char prompt[]){
     char input[50];
     int return_value;
