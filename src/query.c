@@ -1,5 +1,6 @@
 #include "../headers/Banksys.h"
 #include <string.h>
+#include "../headers/query.h"
 
 
 
@@ -13,7 +14,7 @@ void advSearch(Account accounts[],int size){
     gets(keyword);
     printf("Search results: \n\n");
     for (i =0;i<size;i++){
-        char full_name[50];
+        char full_name[250];
         sprintf(full_name,"%s %s",accounts[i].firstname,accounts[i].lastname);
         if(strstr(accounts[i].address,keyword) != NULL||strstr(full_name,keyword) != NULL){
             flag = 1;

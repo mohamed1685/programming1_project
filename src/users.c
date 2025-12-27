@@ -133,7 +133,7 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
                     printaccdetails(accounts,numAccptr);
                     break;
                 case 12:
-                    delete_multiple(accounts,*numAccptr);
+                    delete_multiple(accounts,numAccptr);
                     break;
                 case 13:
                     saveAccounts(accounts, numAccptr);

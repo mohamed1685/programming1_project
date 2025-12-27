@@ -68,6 +68,7 @@ void sortByBalance(Account *accounts, int n);
 void sortByName(Account *accounts, int n);
 int digitVal(char s[]);
 int mailVal(char s[]);
+void quit();
 
 
 #endif
