@@ -121,6 +121,7 @@ void delete_multiple(Account accounts[], int * num_accounts_ptr){
 
         printf(YELLOW"enter 1 for delete by date or 2 for delete by status: "RESET);
         scanf("%i",&option);
+        while(getchar() != '\n');
 
     }
     while(option != 1 && option !=2);
