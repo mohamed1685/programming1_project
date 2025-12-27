@@ -32,6 +32,7 @@ int check_account(long long account_number,
 int dailly_limit(Account accounts[],float withdrawl_amount,int account_index);
 
 void report();
+long long get_account_number(char prompt[]);
 
 
 #endif

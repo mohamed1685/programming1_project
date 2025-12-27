@@ -7,8 +7,7 @@
 void report(){
     int i;
     long long account_number;
-    printf(YELLOW "Enter a bank account number: " RESET);
-    scanf("%lld",&account_number);
+    account_number = get_account_number(YELLOW "Enter a bank account number: " RESET);
 
     char file_name[64];
     sprintf(file_name,"./transactions/%lld.txt",account_number);
@@ -110,14 +109,14 @@ void transfer(Account accounts[],int array_size){
     float transfer_amount;
 
     do{
-        printf(YELLOW "Enter account number of sender: " RESET);
-        scanf("%lld",&sender_number);
+
+        sender_number = get_account_number(YELLOW "Enter account number of sender: " RESET);
     }
     while (check_account(sender_number,accounts,array_size,&sender_index) !=1);
 
     do{
-        printf(YELLOW "Enter account number of reciever: " RESET);
-        scanf("%lld",&reciever_number);
+        reciever_number= get_account_number( YELLOW "Enter account number of reciever: " RESET);
+
     }
     while (check_account(reciever_number,accounts,array_size,&reciever_index) !=1);
     
@@ -174,8 +173,8 @@ void withdraw(Account accounts[],int size){
     int account_index;
     float withdrawl_amount;
     do{
-        printf(YELLOW "Enter account number: " RESET);
-        scanf("%lld",&account_number);
+        account_number = get_account_number(YELLOW "Enter account number: " RESET);
+
     }
     while (check_account(account_number,accounts,size,&account_index) !=1);
 
@@ -220,8 +219,7 @@ void deposit(Account accounts[],int size){
     int account_index;
     float deposit_amount;
     do{
-        printf(YELLOW "Enter account number: " RESET);
-        scanf("%lld",&account_number);
+        account_number = get_account_number("Enter account number: " RESET);
     }
     while (check_account(account_number,accounts,size,&account_index) !=1);
 
@@ -247,4 +245,22 @@ int dailly_limit(Account accounts[],float withdrawl_amount,int account_index){
         return 0 ;
     }
     else return 1;
+}
+
+
+long long get_account_number(char prompt[]){
+    char input[50];
+    int return_value;
+    int valid= 0 ;
+    do{
+    printf("%s",prompt);
+    scanf("%s", input);
+        if (strlen(input) == 10 && digitVal(input)) {
+            return_value = atoll(input);
+            valid = 1;
+        } else {
+            printf(RED "Error: Account number must be exactly 10 digits.\n" RESET);
+            valid = 0;
+        }
+}while (!valid);
 }
