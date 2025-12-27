@@ -152,9 +152,7 @@ void addacc(Account *accounts, int *numAccptr) {
 
     do {
         printf(YELLOW "\nEnter Account creation month (1-12): " RESET);
-        if (scanf("%d", &accounts[*numAccptr].date_opened.month) == 1 && 
-            accounts[*numAccptr].date_opened.month >= 1 && 
-            accounts[*numAccptr].date_opened.month <= 12) {
+        if (scanf("%d", &accounts[*numAccptr].date_opened.month) == 1 && accounts[*numAccptr].date_opened.month >= 1 && accounts[*numAccptr].date_opened.month <= 12) {
             valid = 1;
         } else {
             printf(RED "Error: Invalid month. Enter 1-12.\n" RESET);
