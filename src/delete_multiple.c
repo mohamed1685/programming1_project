@@ -56,35 +56,61 @@ else{
 
 //deletes all inactive accounts for more than 90 days with balance = 0
 
-void delete_by_status(Account accounts[],int* num_accounts_ptr){
+void delete_by_status(Account accounts[], int* num_accounts_ptr) {
     Date current_date;
-    int i,flag=0;
-    int counter = 0;
-    printf(YELLOW"enter current year: ");
-    scanf("%i",&current_date.year);
-    printf("enter current month: "RESET);
-    scanf("%i",&current_date.month);
+    int i, flag = 0, counter = 0;
 
-    
-    
-    for (i = 0; i<*num_accounts_ptr;i++){
-        if(accounts[i].status == 0 && accounts[i].balance == 0&&date_check(current_date,accounts[i].date_opened)){
-            delete_account(accounts,*num_accounts_ptr,accounts[i].account_number);
+    /* YEAR */
+    while (1) {
+        printf(YELLOW "enter current year: " RESET);
+
+        if (scanf("%i", &current_date.year) != 1 || current_date.year < 0) {
+            printf(RED " invalid year\n" RESET);
+            while (getchar() != '\n');
+            continue;
+        }
+
+        while (getchar() != '\n');
+        break;
+    }
+
+    /* MONTH */
+    while (1) {
+        printf(YELLOW "enter current month: " RESET);
+
+        if (scanf("%i", &current_date.month) != 1 ||
+            current_date.month < 1 || current_date.month > 12) {
+            printf(RED " invalid month\n" RESET);
+            while (getchar() != '\n');
+            continue;
+        }
+
+        while (getchar() != '\n');
+        break;
+    }
+
+    for (i = 0; i < *num_accounts_ptr; i++) {
+        if (accounts[i].status == 0 &&
+            accounts[i].balance == 0 &&
+            date_check(current_date, accounts[i].date_opened)) {
+
+            delete_account(accounts, *num_accounts_ptr,
+                           accounts[i].account_number);
             flag = 1;
             counter++;
             i--;
         }
-    *num_accounts_ptr -= counter; 
+    }
 
-}
-if (flag ==0){
-    printf(RED"no inactive accounts for more than 90 days with balance = 0  \n"RESET);
-}
-else{
-    printf(GREEN"successfully deleted %i accounts \n "RESET,counter);
+    *num_accounts_ptr -= counter;
+
+    if (!flag) {
+        printf(RED "no inactive accounts for more than 90 days with balance = 0\n" RESET);
+    } else {
+        printf(GREEN "successfully deleted %i accounts\n" RESET, counter);
+    }
 }
 
-}
 
 //helper function to delete an account given an account number
 void delete_account(Account accounts[], int size,long long target) {
@@ -104,7 +130,10 @@ void delete_account(Account accounts[], int size,long long target) {
         }
     }
 
-
+    if (foundInd == -1) {
+    printf(RED "Account not found\n" RESET);
+    return;
+}
 
     for (int j = foundInd; j < (size) - 1; j++) {
         accounts[j] = accounts[j + 1];
