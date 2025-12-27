@@ -16,20 +16,20 @@ int digitVal(char s[]) {
 
 int mailVal(char s[]) {
     int i = 0;
-    int at_index = -1;
-    int dot_index = -1;
+    int atInd = -1;
+    int dotInd = -1;
 
     while (s[i] != '\0') {
         if (s[i] == '@') {
-            at_index = i; 
+            atInd = i; 
         }
         else if (s[i] == '.') {
-            dot_index = i; 
+            dotInd = i; 
         }
         i++;
     }
 
-    if (at_index != -1 && dot_index != -1 && at_index < dot_index) {
+    if (atInd != -1 && dotInd != -1 && atInd < dotInd) {
         return 1;
     }
     return 0;
