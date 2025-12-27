@@ -1,4 +1,6 @@
 
-transfer_out,5.000000
-transfer_out,50.000000
-transfer_in,10.000000
+transfer out,5.00
+transfer out,50.00
+transfer in,10.00
+transfer out,50.00
+transfer out,4.00

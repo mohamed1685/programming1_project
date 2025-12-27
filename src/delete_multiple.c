@@ -1,6 +1,7 @@
 #include "../headers/Banksys.h"
 
 
+
 void delete_by_date(Account accounts[],int size){
 int year,month,i;
 int flag = 0;
@@ -89,6 +90,9 @@ void delete_multiple(Account accounts[], int size){
         scanf("%i",&option);
         if (option !=1 && option != 2){
             flag = 0;
+        }
+        else{
+            flag = 1;
         }
     }
     while(flag ==0);

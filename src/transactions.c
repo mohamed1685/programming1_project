@@ -51,7 +51,7 @@ void add_transfer_transaction(long long reciver_number,long long sender_number,f
     }
     char new_line1[50];
 
-    sprintf(new_line1,"\ntransfer_in,%f",transfer_amount);
+    sprintf(new_line1,"\ntransfer in,%.2f",transfer_amount);
     fprintf(file_ptr,"%s",new_line1);
     fclose(file_ptr);
 
@@ -67,7 +67,7 @@ void add_transfer_transaction(long long reciver_number,long long sender_number,f
 
     char new_line2[50];
 
-    sprintf(new_line2,"\ntransfer_out,%f",transfer_amount);
+    sprintf(new_line2,"\ntransfer out,%f.2",transfer_amount);
     fprintf(file_ptr,"%s",new_line2);
     fclose(file_ptr); 
 }
@@ -85,7 +85,7 @@ void add_withdraw_transaction(long long account_number,float withdraw_amount){
     }
     char new_line[50];
 
-    sprintf(new_line,"\nwithdraw,%f",withdraw_amount);
+    sprintf(new_line,"\nwithdraw,%.2f",withdraw_amount);
     fprintf(file_ptr,"%s",new_line);
     fclose(file_ptr);
 }

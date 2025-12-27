@@ -412,3 +412,8 @@ void saveAccounts(Account *accounts, int *numAccptr) {
     fclose(file);
     printf(GREEN "All changes saved successfully to accounts.txt\n" RESET);
 }
+
+void quit(){
+        printf(GREEN "Succesfully exited system, Goodbye\n" RESET);
+
+}

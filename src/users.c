@@ -36,6 +36,7 @@ void loadUsers(User *users, int *numUsersPtr){
     printf(GREEN "Successfully loaded %d users\n\n" RESET, count);
 }
 
+
 int login(User *users, int numUsers){
     char userIn[Max_input_length];
     char passIn[Max_input_length];
@@ -138,7 +139,7 @@ void menu(Account *accounts,int *numAccptr,int loginstatus){
                     saveAccounts(accounts, numAccptr);
                     break;
                 case 14:
-                    printf(GREEN "Succesfully exited system, Goodbye\n" RESET);
+                    quit();
                     break;
             }
         }
