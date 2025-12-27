@@ -18,7 +18,7 @@ int valid = 1;
 do{
 printf("enter year: ");
 scanf("%i",&year);
-getchar();
+while(getchar() != '\n');
 }
 while(year<0);
 
@@ -67,7 +67,7 @@ void delete_by_status(Account accounts[],int* num_accounts_ptr){
 
     
     
-    for (i = 0; i<num_accounts_ptr;i++){
+    for (i = 0; i<*num_accounts_ptr;i++){
         if(accounts[i].status == 0 && accounts[i].balance == 0&&date_check(current_date,accounts[i].date_opened)){
             delete_account(accounts,*num_accounts_ptr,accounts[i].account_number);
             flag = 1;

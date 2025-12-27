@@ -41,7 +41,7 @@ void report(){
 
 void add_transfer_transaction(long long reciver_number,long long sender_number,float transfer_amount){
     
-    char reciever_file_name[20] ;
+    char reciever_file_name[70] ;
     sprintf(reciever_file_name,"./transactions/%lld.txt",reciver_number);
     
     FILE * file_ptr = fopen(reciever_file_name,"a");
@@ -55,7 +55,7 @@ void add_transfer_transaction(long long reciver_number,long long sender_number,f
     fprintf(file_ptr,"%s",new_line1);
     fclose(file_ptr);
 
-    char sender_file_name[20];
+    char sender_file_name[80];
     sprintf(sender_file_name,"./transactions/%lld.txt",sender_number);
 
     file_ptr = fopen(sender_file_name,"a");
@@ -91,7 +91,7 @@ void add_withdraw_transaction(long long account_number,float withdraw_amount){
 }
 
 void add_deposit_transaction(long long account_number, float deposit_amount) {
-    char file_name[20];
+    char file_name[50];
     snprintf(file_name, sizeof(file_name), "./transactions/%lld.txt", account_number);
 
     FILE *file_ptr = fopen(file_name, "a");
