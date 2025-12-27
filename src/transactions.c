@@ -16,7 +16,7 @@ void report(){
     FILE * file_ptr = fopen(file_name,"r");
     
     if(file_ptr == NULL){
-        printf(RED "Error: Failed to open file\n" RESET);
+        printf(RED "no transactions for this account \n" RESET);
         exit(1);
     }
 
