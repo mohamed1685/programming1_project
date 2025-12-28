@@ -287,8 +287,8 @@ void modifyacc(Account *accounts, int *numAccptr) {
     long long useracc;
     char userin[100]; 
     
-    printf(YELLOW "Enter account number to modify: " RESET);
-    scanf("%lld", &useracc);
+    useracc = get_account_number(YELLOW "Enter account number to modify: " RESET);
+
     while (i < (*numAccptr)) {
         if (useracc == accounts[i].account_number) {
             foundind = i;
@@ -357,8 +357,8 @@ void changeStatus(Account *accounts,int *numAccptr){
     int i=0,foundind=-1,newStatus;
     long long useracc;
     
-    printf(YELLOW "enter account number: " RESET);
-    scanf("%lld",&useracc);
+    useracc = get_account_number(YELLOW "enter account number: " RESET);
+
     while(i<(*numAccptr)){
         if(useracc==accounts[i].account_number){
             foundind=i;

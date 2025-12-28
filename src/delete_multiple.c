@@ -16,14 +16,14 @@ int valid = 1;
 
 
 do{
-printf("enter year: ");
+printf(YELLOW" Enter year: "RESET);
 scanf("%i",&year);
 while(getchar() != '\n');
 }
 while(year<0);
 
 do{
-printf("enter month: ");
+printf(YELLOW "Enter month: " RESET);
 
 if(scanf("%i",&month)!=1 || month<0 ||month >12){
     printf( RED " invalid " RESET);
@@ -60,7 +60,7 @@ void delete_by_status(Account accounts[], int* num_accounts_ptr) {
     Date current_date;
     int i, flag = 0, counter = 0;
 
-    /* YEAR */
+
     while (1) {
         printf(YELLOW "enter current year: " RESET);
 
@@ -74,7 +74,7 @@ void delete_by_status(Account accounts[], int* num_accounts_ptr) {
         break;
     }
 
-    /* MONTH */
+
     while (1) {
         printf(YELLOW "enter current month: " RESET);
 

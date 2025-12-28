@@ -38,6 +38,7 @@ void report(){
     printf("\n");
 }
 
+
 //records a given tranfer in a txt file
 void add_transfer_transaction(long long reciver_number,long long sender_number,float transfer_amount){
     

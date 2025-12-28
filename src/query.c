@@ -1,6 +1,7 @@
 #include "../headers/Banksys.h"
 #include <string.h>
 #include "../headers/query.h"
+#include "../headers/transactions.h"
 
 
 
@@ -30,8 +31,7 @@ void advSearch(Account accounts[],int size){
 void search(Account accounts[],int *numAccptr){
     int i=0,foundind=-1;
     long long useracc;
-    printf(YELLOW"enter account number"RESET);
-    scanf("%lld",&useracc);
+    useracc = get_account_number(YELLOW "Enter account number: " RESET);
     while(i<(*numAccptr)){
         if(useracc==accounts[i].account_number){
             foundind=i;
