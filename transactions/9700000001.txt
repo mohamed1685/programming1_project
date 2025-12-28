@@ -1,7 +1,0 @@
-
-withdraw,6000.000000
-withdraw,8000.000000
-withdraw,9999.000000
-withdraw,9999.000000
-withdraw,9999.000000
-withdraw,5555.000000

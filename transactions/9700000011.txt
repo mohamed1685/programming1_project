@@ -1,5 +1,0 @@
-
-withdraw,50.000000
-transfer_out,10.000000
-transfer_in,70.000000
-transfer in,4.00

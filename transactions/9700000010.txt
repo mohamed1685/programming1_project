@@ -1,6 +1,0 @@
-
-transfer out,5.00
-transfer out,50.00
-transfer in,10.00
-transfer out,50.00
-transfer out,4.00
